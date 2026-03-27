@@ -17,14 +17,15 @@ echo ""
 echo "--- Line Counts ---"
 
 # TODO: Count total lines in the log file
-# echo "Total lines: $( ... )"
+echo "Total lines: $(grep "" server.log | wc -l)"
+
 
 # TODO: Count lines containing ERROR
-# echo "Error lines: $( ... )"
+echo "Error lines: $(grep "ERROR" server.log | wc -l)"
 
 # TODO: Count lines containing WARN
 # echo "Warning lines: $( ... )"
-
+echo "Warning lines: $(grep "WARN" server.log | wc -l)"
 echo ""
 
 # ─────────────────────────────────────────────
@@ -35,7 +36,7 @@ echo ""
 echo "--- Unique Error Messages ---"
 
 # TODO: grep ERROR lines, extract the message part, sort, remove duplicates
-# grep ... | awk ... | sort | uniq
+grep "" server.log | cut -d " " -f 4- | sort | uniq
 
 echo ""
 
@@ -47,7 +48,7 @@ echo ""
 echo "--- Top Endpoints ---"
 
 # TODO: grep for GET or POST, extract method and path, count and rank
-# grep ... | awk ... | sort | uniq -c | sort -rn
+grep 'GET\|POST' server.log | cut -d " " -f 6-7 | sort | uniq -c | sort -rn
 
 echo ""
 
@@ -58,7 +59,7 @@ echo ""
 echo "--- User Logins ---"
 
 # TODO: grep for session lines, extract usernames, count and rank
-# grep ... | grep -o ... | sort | uniq -c | sort -rn
+grep 'session created for user=' server.log | cut -d " " -f 8 | sort | uniq -c | sort -rn
 
 echo ""
 
@@ -68,4 +69,4 @@ echo ""
 # ─────────────────────────────────────────────
 
 # TODO: Print a line showing when this report was generated
-# echo "Report generated: $( ... )"
+echo "Report generated: $(date)"
